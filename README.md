@@ -1,5 +1,5 @@
-# onecx-ai-quarkus-svc
-OneCx AI quarkus Service
+# onecx-ai-svc
+OneCx AI Service
 
 build standard image
 ```
