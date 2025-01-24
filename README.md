@@ -1,4 +1,4 @@
-# onecx-ai-svc
+# onecx-ai-management-svc
 OneCx AI Service
 
 build standard image
