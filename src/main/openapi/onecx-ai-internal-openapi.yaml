@@ -4,7 +4,7 @@ info:
   title: onecx-ai internal service
   version: 1.0.0
 servers:
-  - url: "http://onecx-ai-svc:8080"
+  - url: "http://onecx-ai-management-svc:8080"
 tags:
   - name: aiKnowledgeBaseInternal
   - name: aiContextInternal

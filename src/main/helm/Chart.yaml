@@ -1,12 +1,12 @@
 apiVersion: v1
-name: onecx-ai-svc
+name: onecx-ai-management-svc
 version: 0.0.0
 appVersion: 0.0.0
 description: Onecx ai service
 keywords:
   - ai
 sources:
-  - https://github.com/onecx-apps/onecx-ai-svc
+  - https://github.com/onecx-apps/onecx-ai-management-svc
 maintainers:
   - name: Tkit Developer
     email: tkit_dev@1000kit.org

@@ -1,6 +1,6 @@
 include::onecx-ai-svc-attributes.adoc[opts=optional]
 
-== onecx-ai-svc
+== onecx-ai-management-svc
 
 include::docs.adoc[opts=optional]
 
