@@ -160,6 +160,7 @@ public class OllamaLlmService extends AbstractLlmService {
         ChatMessageDTO chatMessageDTO = new ChatMessageDTO();
         chatMessageDTO.setMessage(message[0]);
         chatMessageDTO.setType(ChatMessageDTO.TypeEnum.ASSISTANT);
+        chatMessageDTO.setCreationDate(new Date().getTime());
 
         return Response.ok(chatMessageDTO).build();
     }
