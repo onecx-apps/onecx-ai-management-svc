@@ -13,5 +13,4 @@ jobs:
     secrets: inherit
     with:
       native: false
-
-
+      helmEventTargetRepository: onecx-apps/onecx-ai
