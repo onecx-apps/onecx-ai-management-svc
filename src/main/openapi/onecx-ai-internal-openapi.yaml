@@ -877,8 +877,12 @@ paths:
             schema:
               $ref: '#/components/schemas/UpdateAIKnowledgeDocumentRequest'
       responses:
-        '204':
+        '200':
           description: AIKnowledgeDocument updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AIKnowledgeDocument'
         "400":
           description: Bad request
           content:
@@ -1267,7 +1271,7 @@ components:
             $ref: '#/components/schemas/AIContext'            
     AIKnowledgeBase:
       properties:
-        version:
+        modificationCount:
           format: int32
           type: integer
         creationDate:
@@ -1339,7 +1343,7 @@ components:
         - modelVersion
       type: object
       properties:
-        version:
+        modificationCount:
           format: int32
           type: integer
         creationDate:
@@ -1400,6 +1404,7 @@ components:
     UpdateAIKnowledgeDocumentRequest:
       required:
         - documentRefId
+        - modificationCount
       type: object
       properties:
         status:
@@ -1408,12 +1413,15 @@ components:
           type: string
         documentRefId:
           type: string
+        modificationCount:
+          type: integer
+          format: int32
     AIKnowledgeDocument:
       required:
         - documentRefId
       type: object
       properties:
-        version:
+        modificationCount:
           format: int32
           type: integer
         creationDate:
@@ -1459,7 +1467,7 @@ components:
         - url
       type: object
       properties:
-        version:
+        modificationCount:
           format: int32
           type: integer
         creationDate:
@@ -1523,7 +1531,7 @@ components:
         - pwd
       type: object
       properties:
-        version:
+        modificationCount:
           format: int32
           type: integer
         creationDate:
@@ -1597,7 +1605,7 @@ components:
         - pwd
       type: object
       properties:
-        version:
+        modificationCount:
           format: int32
           type: integer
         creationDate:
@@ -1690,7 +1698,7 @@ components:
         - name
       type: object
       properties:
-        version:
+        modificationCount:
           format: int32
           type: integer
         creationDate:

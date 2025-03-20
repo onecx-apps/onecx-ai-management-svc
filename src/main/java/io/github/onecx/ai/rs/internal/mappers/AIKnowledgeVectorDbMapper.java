@@ -40,7 +40,6 @@ public interface AIKnowledgeVectorDbMapper {
     public abstract AIKnowledgeVectorDb updateKnowledgeVectorDb(UpdateAIKnowledgeVectorDbRequestDTO dto,
             @MappingTarget AIKnowledgeVectorDb entity);
 
-    @Mapping(target = "version", ignore = true)
     @Mapping(target = "vdbUrl", source = "vdb")
     @Mapping(target = "user", source = "creationUser")
     @Mapping(target = "pwd", ignore = true)

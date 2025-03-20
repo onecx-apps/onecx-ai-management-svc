@@ -32,7 +32,6 @@ public interface AIKnowledgeDocumentMapper {
     @Mapping(target = "modificationDate", ignore = true)
     @Mapping(target = "modificationUser", ignore = true)
     @Mapping(target = "controlTraceabilityManual", ignore = true)
-    @Mapping(target = "modificationCount", ignore = true)
     @Mapping(target = "persisted", ignore = true)
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "tenantId", ignore = true)
@@ -40,7 +39,6 @@ public interface AIKnowledgeDocumentMapper {
     public abstract AIKnowledgeDocument updateKnowledgeDocument(UpdateAIKnowledgeDocumentRequestDTO dto,
             @MappingTarget AIKnowledgeDocument entity);
 
-    @Mapping(target = "version", ignore = true)
     public abstract AIKnowledgeDocumentDTO map(AIKnowledgeDocument aiKnowledgeDocument);
 
     public abstract List<AIKnowledgeDocumentDTO> mapDocumentList(List<AIKnowledgeDocument> items);

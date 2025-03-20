@@ -119,8 +119,8 @@ public class AIKnowledgeDocumentRestController implements AiKnowledgeDocumentInt
         }
 
         mapper.updateKnowledgeDocument(updateAIKnowledgeDocumentRequestDTO, aiKnowledgeDocument);
-        dao.update(aiKnowledgeDocument);
-        return Response.noContent().build();
+        var updatedDocument = dao.update(aiKnowledgeDocument);
+        return Response.status(Response.Status.OK).entity(mapper.map(updatedDocument)).build();
     }
 
     @Override
