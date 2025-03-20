@@ -40,7 +40,6 @@ public interface AIKnowledgeUrlMapper {
     public abstract AIKnowledgeUrl updateKnowledgeUrl(UpdateAIKnowledgeUrlRequestDTO dto,
             @MappingTarget AIKnowledgeUrl entity);
 
-    @Mapping(target = "version", source = "modificationCount")
     public abstract AIKnowledgeUrlDTO map(AIKnowledgeUrl aiKnowledgeUrl);
 
     public abstract List<AIKnowledgeUrlDTO> mapUrlList(List<AIKnowledgeUrl> items);

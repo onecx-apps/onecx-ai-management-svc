@@ -56,7 +56,6 @@ public interface AIProviderMapper {
     @Mapping(target = "tenantId", ignore = true)
     void update(UpdateAIProviderRequestDTO chatDTO, @MappingTarget AIProvider entity);
 
-    @Mapping(target = "version", source = "modificationCount")
     AIProviderDTO map(AIProvider provider);
 
 }

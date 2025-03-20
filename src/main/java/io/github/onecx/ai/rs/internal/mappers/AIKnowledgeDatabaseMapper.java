@@ -40,7 +40,6 @@ public interface AIKnowledgeDatabaseMapper {
     public abstract AIKnowledgeDatabase updateKnowledgeDatabase(UpdateAIKnowledgeDatabaseRequestDTO dto,
             @MappingTarget AIKnowledgeDatabase entity);
 
-    @Mapping(target = "version", ignore = true)
     @Mapping(target = "user", source = "usr")
     @Mapping(target = "pwd", ignore = true)
     @Mapping(target = "tables", ignore = true)
