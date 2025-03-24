@@ -235,6 +235,7 @@ public class AIKnowledgeDocumentRestControllerTest extends AbstractTest {
         aiKnowledgeDocumentDto.setDocumentRefId("updated-document-ref-id");
         aiKnowledgeDocumentDto.setName("updated-document-name");
         aiKnowledgeDocumentDto.setStatus(DocumentStatusTypeDTO.EMBEDDED);
+        aiKnowledgeDocumentDto.setModificationCount(0);
 
         //update not existing ai-knowledge-document
         given()
@@ -247,13 +248,16 @@ public class AIKnowledgeDocumentRestControllerTest extends AbstractTest {
                 .statusCode(NOT_FOUND.getStatusCode());
 
         //update ai-knowledge-document
-        given()
+        var result = given()
                 .contentType(APPLICATION_JSON)
                 .body(aiKnowledgeDocumentDto)
                 .when()
                 .pathParam("id", "document-22-222")
                 .put("/ai-knowledge-documents/{id}")
-                .then().statusCode(NO_CONTENT.getStatusCode());
+                .then().statusCode(OK.getStatusCode())
+                .extract().as(AIKnowledgeDocumentDTO.class);
+
+        assertThat(result).isNotNull();
 
         //get updated ai-knowledge-document
         var dto = given().contentType(APPLICATION_JSON)

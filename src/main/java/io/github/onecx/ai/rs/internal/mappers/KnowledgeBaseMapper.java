@@ -50,7 +50,6 @@ public interface KnowledgeBaseMapper {
     public abstract AIKnowledgeBase updateAIKnowledgeBase(UpdateAIKnowledgeBaseRequestDTO dto,
             @MappingTarget AIKnowledgeBase entity);
 
-    @Mapping(target = "version", source = "modificationCount")
     @Mapping(target = "removeContextsItem", ignore = true)
     @Mapping(target = "contexts", ignore = true)
     AIKnowledgeBaseDTO map(AIKnowledgeBase knowledgeBase);
