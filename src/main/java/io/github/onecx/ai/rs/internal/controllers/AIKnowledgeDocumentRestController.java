@@ -30,7 +30,6 @@ import lombok.extern.slf4j.Slf4j;
 @ApplicationScoped
 @Transactional(value = NOT_SUPPORTED)
 public class AIKnowledgeDocumentRestController implements AiKnowledgeDocumentInternalApi {
-
     @Inject
     AIKnowledgeDocumentDAO dao;
 
@@ -107,6 +106,13 @@ public class AIKnowledgeDocumentRestController implements AiKnowledgeDocumentInt
         var aiKnowledgeDocuments = context.getAiKnowledgeDocuments();
         List<AIKnowledgeDocument> knowledgeDocumentList = new ArrayList<>(aiKnowledgeDocuments);
         return Response.ok(mapper.mapDocumentList(knowledgeDocumentList)).build();
+    }
+
+    @Override
+    public Response searchAIKnowledgeDocuments(AIKnowledgeDocumentSearchCriteriaDTO aiKnowledgeDocumentSearchCriteriaDTO) {
+        var searchCriteria = mapper.mapSearch(aiKnowledgeDocumentSearchCriteriaDTO);
+        var searchResult = dao.findAIKnowledgeDocumentsByCriteria(searchCriteria);
+        return Response.status(Response.Status.OK).entity(mapper.mapSearchResult(searchResult)).build();
     }
 
     @Override

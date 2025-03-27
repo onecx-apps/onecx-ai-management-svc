@@ -837,7 +837,34 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/AIProviderPageResult'
-            
+  /internal/ai/ai-knowledge-documents/search:
+    post:
+      tags:
+        - aiKnowledgeDocumentInternal
+      summary: Search for AIKnowledge Documents
+      description: Return a list of all available AIKnowledgeDocument if no filter criteria is provided
+      operationId: searchAIKnowledgeDocuments
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AIKnowledgeDocumentSearchCriteria'
+
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AIKnowledgeDocumentPageResult'
+        400:
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetailResponse'
+
   /internal/ai/ai-knowledge-documents/{id}:
     get:
       tags:
@@ -1784,3 +1811,44 @@ components:
           type: string
         message:
           type: string
+
+    AIKnowledgeDocumentSearchCriteria:
+      type: object
+      properties:
+        name:
+          type: string
+        documentRefId:
+          type: string
+        status:
+          $ref: '#/components/schemas/DocumentStatusType'
+        pageNumber:
+          format: int32
+          description: The number of page.
+          default: 0
+          type: integer
+        pageSize:
+          format: int32
+          description: The size of page
+          default: 10
+          type: integer
+
+    AIKnowledgeDocumentPageResult:
+      type: object
+      properties:
+        totalElements:
+          format: int64
+          description: The total elements in the resource.
+          type: integer
+        number:
+          format: int32
+          type: integer
+        size:
+          format: int32
+          type: integer
+        totalPages:
+          format: int64
+          type: integer
+        stream:
+          type: array
+          items:
+            $ref: '#/components/schemas/AIKnowledgeDocument'

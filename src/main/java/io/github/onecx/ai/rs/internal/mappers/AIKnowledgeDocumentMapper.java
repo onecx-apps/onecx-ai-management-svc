@@ -5,11 +5,11 @@ import java.util.List;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
+import org.tkit.quarkus.jpa.daos.PageResult;
 import org.tkit.quarkus.rs.mappers.OffsetDateTimeMapper;
 
-import gen.io.github.onecx.ai.rs.internal.model.AIKnowledgeDocumentDTO;
-import gen.io.github.onecx.ai.rs.internal.model.CreateAIKnowledgeDocumentRequestDTO;
-import gen.io.github.onecx.ai.rs.internal.model.UpdateAIKnowledgeDocumentRequestDTO;
+import gen.io.github.onecx.ai.rs.internal.model.*;
+import io.github.onecx.ai.domain.criteria.AIKnowledgeDocumentSearchCriteria;
 import io.github.onecx.ai.domain.models.AIKnowledgeDocument;
 
 @Mapper(uses = { OffsetDateTimeMapper.class })
@@ -39,7 +39,12 @@ public interface AIKnowledgeDocumentMapper {
     public abstract AIKnowledgeDocument updateKnowledgeDocument(UpdateAIKnowledgeDocumentRequestDTO dto,
             @MappingTarget AIKnowledgeDocument entity);
 
+    AIKnowledgeDocumentSearchCriteria mapSearch(AIKnowledgeDocumentSearchCriteriaDTO criteriaDTO);
+
     public abstract AIKnowledgeDocumentDTO map(AIKnowledgeDocument aiKnowledgeDocument);
+
+    @Mapping(target = "removeStreamItem", ignore = true)
+    AIKnowledgeDocumentPageResultDTO mapSearchResult(PageResult<AIKnowledgeDocument> pageResult);
 
     public abstract List<AIKnowledgeDocumentDTO> mapDocumentList(List<AIKnowledgeDocument> items);
 
