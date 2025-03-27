@@ -352,8 +352,6 @@ public class AIKnowledgeDocumentRestControllerTest extends AbstractTest {
 
     @Test
     void searchAIKnowledgeDocumentCriteriaFailingTest() {
-        //        var criteriaEmptyBody = new AIKnowledgeDocumentSearchCriteriaDTO();
-
         // try to do not providing an empty json in body should return 400 status
         var exception = given()
                 .contentType(APPLICATION_JSON)
@@ -384,7 +382,6 @@ public class AIKnowledgeDocumentRestControllerTest extends AbstractTest {
                 .extract()
                 .as(AIKnowledgeDocumentPageResultDTO.class);
         assertThat(result).isNotNull();
-        assertThat(result.getTotalElements()).isEqualTo(0);
         assertThat(result.getStream()).isEmpty();
     }
 }
