@@ -275,4 +275,68 @@ public class AIKnowledgeDocumentRestControllerTest extends AbstractTest {
         assertThat(dto.getDocumentRefId()).isEqualTo(aiKnowledgeDocumentDto.getDocumentRefId());
         assertThat(dto.getStatus()).isEqualTo(aiKnowledgeDocumentDto.getStatus());
     }
+
+    @Test
+    void searchAIKnowledgeDocumentTest() {
+        var criteriaEmptyBody = new AIKnowledgeDocumentSearchCriteriaDTO();
+
+        // get all knowledge documents
+        var data = given()
+                .contentType(APPLICATION_JSON)
+                .body(criteriaEmptyBody)
+                .post("/ai-knowledge-documents/search")
+                .then()
+                .statusCode(OK.getStatusCode())
+                .contentType(APPLICATION_JSON)
+                .extract()
+                .as(AIKnowledgeDocumentPageResultDTO.class);
+        assertThat(data).isNotNull();
+        assertThat(data.getTotalElements()).isEqualTo(3);
+
+        // filter by name
+        var criteriaWithOnlyName = new AIKnowledgeDocumentSearchCriteriaDTO();
+        criteriaWithOnlyName.setName("knowledge_document_name2");
+        data = given()
+                .contentType(APPLICATION_JSON)
+                .body(criteriaWithOnlyName)
+                .post("/ai-knowledge-documents/search")
+                .then()
+                .statusCode(OK.getStatusCode())
+                .contentType(APPLICATION_JSON)
+                .extract()
+                .as(AIKnowledgeDocumentPageResultDTO.class);
+        assertThat(data).isNotNull();
+        assertThat(data.getTotalElements()).isEqualTo(1);
+
+        // filter by status
+        AIKnowledgeDocumentSearchCriteriaDTO criteriaWithOnlyStatus;
+        criteriaWithOnlyStatus = new AIKnowledgeDocumentSearchCriteriaDTO();
+        criteriaWithOnlyStatus.setStatus(DocumentStatusTypeDTO.NEW);
+        data = given()
+                .contentType(APPLICATION_JSON)
+                .body(criteriaWithOnlyStatus)
+                .post("/ai-knowledge-documents/search")
+                .then()
+                .statusCode(OK.getStatusCode())
+                .contentType(APPLICATION_JSON)
+                .extract()
+                .as(AIKnowledgeDocumentPageResultDTO.class);
+        assertThat(data).isNotNull();
+        assertThat(data.getTotalElements()).isEqualTo(2);
+
+        var criteriaWithOnlyDocumentRefId = new AIKnowledgeDocumentSearchCriteriaDTO();
+        criteriaWithOnlyDocumentRefId.setDocumentRefId("document_ref3");
+
+        data = given()
+                .contentType(APPLICATION_JSON)
+                .body(criteriaWithOnlyDocumentRefId)
+                .post("/ai-knowledge-documents/search")
+                .then()
+                .statusCode(OK.getStatusCode())
+                .contentType(APPLICATION_JSON)
+                .extract()
+                .as(AIKnowledgeDocumentPageResultDTO.class);
+        assertThat(data).isNotNull();
+        assertThat(data.getTotalElements()).isEqualTo(1);
+    }
 }
