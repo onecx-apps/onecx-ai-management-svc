@@ -277,7 +277,7 @@ public class AIKnowledgeDocumentRestControllerTest extends AbstractTest {
     }
 
     @Test
-    void searchAIKnowledgeDocumentTest() {
+    void searchAIKnowledgeDocumentEmptyCriteriaBodyTest() {
         var criteriaEmptyBody = new AIKnowledgeDocumentSearchCriteriaDTO();
 
         // get all knowledge documents
@@ -292,11 +292,14 @@ public class AIKnowledgeDocumentRestControllerTest extends AbstractTest {
                 .as(AIKnowledgeDocumentPageResultDTO.class);
         assertThat(data).isNotNull();
         assertThat(data.getTotalElements()).isEqualTo(3);
+    }
 
+    @Test
+    void searchAIKnowledgeDocumentByNameTest() {
         // filter by name
         var criteriaWithOnlyName = new AIKnowledgeDocumentSearchCriteriaDTO();
         criteriaWithOnlyName.setName("knowledge_document_name2");
-        data = given()
+        var data = given()
                 .contentType(APPLICATION_JSON)
                 .body(criteriaWithOnlyName)
                 .post("/ai-knowledge-documents/search")
@@ -307,12 +310,16 @@ public class AIKnowledgeDocumentRestControllerTest extends AbstractTest {
                 .as(AIKnowledgeDocumentPageResultDTO.class);
         assertThat(data).isNotNull();
         assertThat(data.getTotalElements()).isEqualTo(1);
+    }
+
+    @Test
+    void searchAIKnowledgeDocumentByStatusTest() {
 
         // filter by status
         AIKnowledgeDocumentSearchCriteriaDTO criteriaWithOnlyStatus;
         criteriaWithOnlyStatus = new AIKnowledgeDocumentSearchCriteriaDTO();
         criteriaWithOnlyStatus.setStatus(DocumentStatusTypeDTO.NEW);
-        data = given()
+        var data = given()
                 .contentType(APPLICATION_JSON)
                 .body(criteriaWithOnlyStatus)
                 .post("/ai-knowledge-documents/search")
@@ -323,11 +330,14 @@ public class AIKnowledgeDocumentRestControllerTest extends AbstractTest {
                 .as(AIKnowledgeDocumentPageResultDTO.class);
         assertThat(data).isNotNull();
         assertThat(data.getTotalElements()).isEqualTo(2);
+    }
 
+    @Test
+    void searchAIKnowledgeDocumentByReferenceIdTest() {
         var criteriaWithOnlyDocumentRefId = new AIKnowledgeDocumentSearchCriteriaDTO();
         criteriaWithOnlyDocumentRefId.setDocumentRefId("document_ref3");
 
-        data = given()
+        var data = given()
                 .contentType(APPLICATION_JSON)
                 .body(criteriaWithOnlyDocumentRefId)
                 .post("/ai-knowledge-documents/search")
@@ -338,5 +348,43 @@ public class AIKnowledgeDocumentRestControllerTest extends AbstractTest {
                 .as(AIKnowledgeDocumentPageResultDTO.class);
         assertThat(data).isNotNull();
         assertThat(data.getTotalElements()).isEqualTo(1);
+    }
+
+    @Test
+    void searchAIKnowledgeDocumentCriteriaFailingTest() {
+        //        var criteriaEmptyBody = new AIKnowledgeDocumentSearchCriteriaDTO();
+
+        // try to do not providing an empty json in body should return 400 status
+        var exception = given()
+                .contentType(APPLICATION_JSON)
+                .body("")
+                .post("/ai-knowledge-documents/search")
+                .then()
+                .statusCode(BAD_REQUEST.getStatusCode())
+                .contentType(APPLICATION_JSON)
+                .extract()
+                .as(ProblemDetailResponseDTO.class);
+        assertThat(exception).isNotNull();
+        assertThat(exception.getErrorCode()).isEqualTo("CONSTRAINT_VIOLATIONS");
+        assertThat(exception.getInvalidParams().get(0).getMessage()).isEqualTo("must not be null");
+    }
+
+    @Test
+    void searchAIKnowledgeDocumentWithIncompleteOrWrongNameTest() {
+        var nameCriteria = new AIKnowledgeDocumentSearchCriteriaDTO();
+        nameCriteria.setName("Fake Name");
+
+        var result = given()
+                .contentType(APPLICATION_JSON)
+                .body(nameCriteria)
+                .post("/ai-knowledge-documents/search")
+                .then()
+                .statusCode(OK.getStatusCode())
+                .contentType(APPLICATION_JSON)
+                .extract()
+                .as(AIKnowledgeDocumentPageResultDTO.class);
+        assertThat(result).isNotNull();
+        assertThat(result.getTotalElements()).isEqualTo(0);
+        assertThat(result.getStream()).isEmpty();
     }
 }
