@@ -64,4 +64,3 @@ repository: "onecx-apps/onecx-ai-quarkus-svc"
   db:
     enabled: true
 ----
-

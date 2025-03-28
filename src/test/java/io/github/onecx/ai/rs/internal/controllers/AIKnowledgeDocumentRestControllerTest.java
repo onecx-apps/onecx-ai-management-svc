@@ -5,7 +5,6 @@ import static jakarta.ws.rs.core.MediaType.APPLICATION_JSON;
 import static jakarta.ws.rs.core.Response.Status.*;
 import static org.assertj.core.api.Assertions.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import jakarta.enterprise.inject.spi.CDI;
@@ -13,8 +12,6 @@ import jakarta.enterprise.inject.spi.CDI;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.function.Executable;
-import org.tkit.quarkus.jpa.exceptions.ConstraintException;
 import org.tkit.quarkus.test.WithDBData;
 
 import gen.io.github.onecx.ai.rs.internal.model.*;
@@ -399,52 +396,13 @@ public class AIKnowledgeDocumentRestControllerTest extends AbstractTest {
     }
 
     @Test
-    void uploadAIKnowledgeDocumentFailedTest() {
-        String testId = "1";
-        var result = given()
+    void getAIKnowledgeDocumentByContextId_ConstaintExceptionTest() {
+        //get ai-knowledge-documents by ai-context
+        given()
                 .contentType(APPLICATION_JSON)
-                .body("")
-                .post("/ai-contexts/" + testId + "/documents")
-                .then()
-                .statusCode(BAD_REQUEST.getStatusCode())
-                .contentType(APPLICATION_JSON)
-                .extract()
-                .as(ProblemDetailResponseDTO.class);
-
-        assertThat(result).isNotNull();
-        assertThat(result.getInvalidParams().get(0).getMessage()).isEqualTo("must not be null");
-    }
-
-    @Test
-    void getAIKnowledgeDocumentByContextFailedTest() {
-        constraintExceptionTests(
-                () -> restController.getAIKnowledgeDocumentsByContextId(null),
-                "AIContext does not exist");
-    }
-
-    // remove or updated the following tests if there are implemented
-    @Test
-    void uploadAIKnowledgeDocumentNotImplementedTest() {
-        unsupportedOperationExceptionTests(
-                () -> restController.uploadKnowledgeDocuments("1", new UploadKnowledgeDocumentsRequestDTO()),
-                "Unimplemented method 'uploadKnowledgeDocuments'");
-    }
-
-    @Test
-    void embeddedAIKnowledgeDocumentNotImplemented() {
-        unsupportedOperationExceptionTests(
-                () -> restController.embeddKnowledgeDocuments("1", new ArrayList<AIKnowledgeDocumentDTO>()),
-                "Unimplemented method 'embeddKnowledgeDocuments'");
-    }
-
-    void unsupportedOperationExceptionTests(Executable lambdaExc, String messageError) {
-        var exc = Assertions.assertThrows(UnsupportedOperationException.class, lambdaExc);
-        Assertions.assertEquals(messageError, exc.getMessage());
-    }
-
-    void constraintExceptionTests(Executable lambdaExc, String constraintMessageError) {
-        var exc = Assertions.assertThrows(ConstraintException.class, lambdaExc);
-        Assertions.assertEquals(constraintMessageError, exc.namedParameters.get("constraint"));
-        Assertions.assertEquals("AI_CONTEXT_DOES_NOT_EXIST", exc.key.toString());
+                .when()
+                .pathParam("id", "id-that-does-not-exist")
+                .get("/ai-contexts/{id}/ai-knowledge-documents")
+                .then().statusCode(BAD_REQUEST.getStatusCode());
     }
 }

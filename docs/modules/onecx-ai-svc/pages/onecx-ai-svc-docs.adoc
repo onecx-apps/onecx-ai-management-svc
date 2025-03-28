@@ -63,4 +63,3 @@ app:
   db:
     enabled: true
 ----
-

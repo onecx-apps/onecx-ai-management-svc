@@ -60,9 +60,3 @@ app:
     enabled: true
 ----
 
-vc"
-    tag: 999-SNAPSHOT
-  db:
-    enabled: true
-----
-

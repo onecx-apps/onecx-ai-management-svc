@@ -6,4 +6,3 @@ include::docs.adoc[opts=optional]
 
 
 include::onecx-ai-management-svc-docs.adoc[opts=optional]
-ional]
