@@ -131,7 +131,7 @@ public class AIKnowledgeDocumentRestController implements AiKnowledgeDocumentInt
 
     @Override
     public Response uploadKnowledgeDocuments(String id, UploadKnowledgeDocumentsRequestDTO uploadKnowledgeDocumentsRequestDTO) {
-        return null;
+        throw new UnsupportedOperationException("Unimplemented method 'uploadKnowledgeDocuments'");
     }
 
     enum AIKonwledgeDocumentErrorKeys {
