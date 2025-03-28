@@ -7,10 +7,7 @@ import static org.assertj.core.api.Assertions.*;
 
 import java.util.List;
 
-import jakarta.enterprise.inject.spi.CDI;
-
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.tkit.quarkus.test.WithDBData;
 
@@ -24,13 +21,6 @@ import io.restassured.common.mapper.TypeRef;
 @TestHTTPEndpoint(AIKnowledgeDocumentRestController.class)
 @WithDBData(value = "data/testdata-internal.xml", deleteBeforeInsert = true, deleteAfterTest = true, rinseAndRepeat = true)
 public class AIKnowledgeDocumentRestControllerTest extends AbstractTest {
-
-    private AIKnowledgeDocumentRestController restController;
-
-    @BeforeEach
-    public void setup() {
-        restController = CDI.current().select(AIKnowledgeDocumentRestController.class).get();
-    }
 
     @Test
     void createAIKnowledgeDocumentSuccessfullyTest() {
