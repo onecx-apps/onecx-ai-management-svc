@@ -8,9 +8,10 @@ import static org.assertj.core.api.Assertions.*;
 import java.util.ArrayList;
 import java.util.List;
 
-import jakarta.inject.Inject;
+import jakarta.enterprise.inject.spi.CDI;
 
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.function.Executable;
 import org.tkit.quarkus.jpa.exceptions.ConstraintException;
@@ -27,8 +28,12 @@ import io.restassured.common.mapper.TypeRef;
 @WithDBData(value = "data/testdata-internal.xml", deleteBeforeInsert = true, deleteAfterTest = true, rinseAndRepeat = true)
 public class AIKnowledgeDocumentRestControllerTest extends AbstractTest {
 
-    @Inject
-    AIKnowledgeDocumentRestController restController;
+    private AIKnowledgeDocumentRestController restController;
+
+    @BeforeEach
+    public void setup() {
+        restController = CDI.current().select(AIKnowledgeDocumentRestController.class).get();
+    }
 
     @Test
     void createAIKnowledgeDocumentSuccessfullyTest() {
