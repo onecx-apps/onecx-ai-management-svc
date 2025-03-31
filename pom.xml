@@ -223,28 +223,25 @@
                     </execution>
                 </executions>
             </plugin>
-<!--            <plugin>
-                <groupId>com.googlecode.maven-download-plugin</groupId>
-                <artifactId>download-maven-plugin</artifactId>
+            <plugin>
+                <groupId>org.tkit.maven</groupId>
+                <artifactId>tkit-docs-quarkus-plugin</artifactId>
                 <executions>
                     <execution>
-                        <id>user-profile-svc-internal</id>
-                        <phase>generate-resources</phase>
+                        <id>docs</id>
+                        <phase>prepare-package</phase>
                         <goals>
-                            <goal>wget</goal>
+                            <goal>docs</goal>
                         </goals>
                         <configuration>
-                            <uri>
-                                https://raw.githubusercontent.com/onecx-apps/onecx-ai-svc/main/resources/chat-openapi.yaml
-                            </uri>
-                            <outputDirectory>target/tmp/openapi</outputDirectory>
-                            <outputFileName>onecx-ai-svc-openapi.yaml</outputFileName>
-                            <skipCache>true</skipCache>
+                            <skipDocs>${skipDocs}</skipDocs>
+                            <openApiFiles>
+                                <openApiFile>onecx-workspace-v1-openapi.yaml</openApiFile>
+                            </openApiFiles>
                         </configuration>
                     </execution>
                 </executions>
-            </plugin>            
--->            
+            </plugin>
         </plugins>
     </build>
 
