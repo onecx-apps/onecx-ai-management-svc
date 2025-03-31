@@ -1,0 +1,3 @@
+* xref:onecx-ai-management-svc:index.adoc[AI Management Backend Service]
+** External API(s)
+*** xref:onecx-ai-management-svc:openapi/onecx-ai-management-v1-openapi.adoc[AI Management V1]

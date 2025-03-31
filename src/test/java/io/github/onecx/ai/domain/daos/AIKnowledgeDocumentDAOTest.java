@@ -13,12 +13,8 @@ import org.tkit.quarkus.jpa.exceptions.DAOException;
 import io.quarkus.test.InjectMock;
 import io.quarkus.test.junit.QuarkusTest;
 
-/**
- * @author rtchanad
- * @project onecx-ai-management-svc
- */
 @QuarkusTest
-public class AIKnowledgeDocumentDAOTest {
+class AIKnowledgeDocumentDAOTest {
     @Inject
     AIKnowledgeDocumentDAO dao;
 

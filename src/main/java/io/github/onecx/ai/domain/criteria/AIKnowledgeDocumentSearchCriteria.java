@@ -5,10 +5,6 @@ import io.quarkus.runtime.annotations.RegisterForReflection;
 import lombok.Getter;
 import lombok.Setter;
 
-/**
- * @author rtchanad
- * @project onecx-ai-management-svc
- */
 @Getter
 @Setter
 @RegisterForReflection

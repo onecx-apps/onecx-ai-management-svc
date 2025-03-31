@@ -173,7 +173,6 @@ paths:
         "404":
           description: Not found
 
-
   /internal/ai/ai-knowledgebases/search:
     post:
       tags:
@@ -196,7 +195,6 @@ paths:
                 items:
                   $ref: '#/components/schemas/AIKnowledgeBasePageResult'
 
-
   /internal/ai/ai-contexts/{id}:
     get:
       tags:
@@ -218,7 +216,6 @@ paths:
                 $ref: '#/components/schemas/AIContext'
         "404":
           description: Not found
-
     delete:
       tags:
         - aiContextInternal
@@ -233,7 +230,6 @@ paths:
       responses:
         '204':
           description: AI Context deleted
-
     put:
       tags:
         - aiContextInternal
@@ -361,7 +357,6 @@ paths:
         '204':
           description: AI Provider removed from AI Context
 
-
   /internal/ai/ai-contexts/{id}/ai-knowledge-vdb:
     post:
       tags:
@@ -457,7 +452,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ProblemDetailResponse'
-
     get:
       tags:
         - aiKnowledgeUrlInternal
@@ -510,7 +504,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ProblemDetailResponse'
-
     post:
       tags:
         - aiKnowledgeDocumentInternal
@@ -608,7 +601,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ProblemDetailResponse'
-
     get:
       tags:
         - aiKnowledgeDatabaseInternal
@@ -697,7 +689,6 @@ paths:
       responses:
         '204':
           description: Knowledge Database deleted
-
 
   /internal/ai/ai-contexts/search:
     post:
@@ -816,6 +807,7 @@ paths:
       responses:
         '204':
           description: No Content
+
   /internal/ai/ai-providers/search:
     post:
       tags:
@@ -837,6 +829,7 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/AIProviderPageResult'
+
   /internal/ai/ai-knowledge-documents/search:
     post:
       tags:
@@ -850,7 +843,6 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/AIKnowledgeDocumentSearchCriteria'
-
       responses:
         200:
           description: OK
@@ -918,7 +910,6 @@ paths:
                 $ref: '#/components/schemas/ProblemDetailResponse'
         "404":
           description: AI Knowledge Document not found
-
     delete:
       tags:
         - aiKnowledgeDocumentInternal
@@ -933,7 +924,6 @@ paths:
       responses:
         '204':
           description: AI Knowledge Document deleted
-
 
   /internal/ai/ai-knowledge-urls/{id}:
     get:
@@ -1066,7 +1056,6 @@ paths:
         '204':
           description: No Content
 
-
   /internal/ai/generate:
     post:
       tags:
@@ -1094,6 +1083,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/AIResponse'
+
   /internal/ai/chat:
     post:
       tags:
@@ -1209,6 +1199,7 @@ components:
           format: int32
           description: The size of page
           default: 10
+          maximum: 100
           type: integer    
     AIContextSearchCriteria:
       type: object
@@ -1230,6 +1221,7 @@ components:
           format: int32
           description: The size of page
           default: 10
+          maximum: 100
           type: integer
     AIKnowledgeBaseSearchCriteria:
       type: object
@@ -1251,6 +1243,7 @@ components:
           format: int32
           description: The size of page
           default: 10
+          maximum: 100
           type: integer
     AIKnowledgeBasePageResult:
       type: object
@@ -1830,6 +1823,7 @@ components:
           format: int32
           description: The size of page
           default: 10
+          maximum: 100
           type: integer
 
     AIKnowledgeDocumentPageResult:
