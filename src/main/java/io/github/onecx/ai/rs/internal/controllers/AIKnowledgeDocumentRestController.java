@@ -99,7 +99,7 @@ public class AIKnowledgeDocumentRestController implements AiKnowledgeDocumentInt
         //check if ai-context exists
         var context = aiContextDAO.findById(id);
         if (context == null) {
-            throw new ConstraintException("AIContext does not exiFst",
+            throw new ConstraintException("AIContext does not exist",
                     AIKnowledgeUrlRestController.AIKonwledgeUrlErrorKeys.AI_CONTEXT_DOES_NOT_EXIST, null);
         }
 
