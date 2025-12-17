@@ -53,7 +53,7 @@ public class AIContext extends TraceableEntity {
     @JoinColumn(name = "KB_ID", foreignKey = @ForeignKey(name = "fkpd073o9e9e3n4l7nhu238td20", foreignKeyDefinition = "FOREIGN KEY (kb_id) REFERENCES ai_kb(guid) ON DELETE CASCADE"))
     private AIKnowledgeBase knowledgebase;
 
-    @ManyToOne(fetch = EAGER)
+    @ManyToOne(fetch = EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "PROVIDER_ID")
     private AIProvider provider;
 
