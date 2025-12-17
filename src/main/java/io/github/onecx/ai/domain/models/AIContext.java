@@ -1,6 +1,5 @@
 package io.github.onecx.ai.domain.models;
 
-import static jakarta.persistence.FetchType.EAGER;
 import static jakarta.persistence.FetchType.LAZY;
 
 import java.util.HashSet;
@@ -53,7 +52,7 @@ public class AIContext extends TraceableEntity {
     @JoinColumn(name = "KB_ID", foreignKey = @ForeignKey(name = "fkpd073o9e9e3n4l7nhu238td20", foreignKeyDefinition = "FOREIGN KEY (kb_id) REFERENCES ai_kb(guid) ON DELETE CASCADE"))
     private AIKnowledgeBase knowledgebase;
 
-    @ManyToOne(fetch = EAGER, cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "PROVIDER_ID")
     private AIProvider provider;
 

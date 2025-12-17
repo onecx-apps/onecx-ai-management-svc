@@ -57,10 +57,4 @@ public interface AIProviderMapper {
     void update(UpdateAIProviderRequestDTO chatDTO, @MappingTarget AIProvider entity);
 
     AIProviderDTO map(AIProvider provider);
-
-    @Mapping(target = "tenantId", ignore = true)
-    @Mapping(target = "persisted", ignore = true)
-    @Mapping(target = "controlTraceabilityManual", ignore = true)
-    @Mapping(target = "id", ignore = true)
-    AIProvider mapLLMProvider(AIProviderDTO llmProvider);
 }
