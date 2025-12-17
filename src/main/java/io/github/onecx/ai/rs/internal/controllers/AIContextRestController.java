@@ -24,8 +24,10 @@ import gen.io.github.onecx.ai.rs.internal.model.ProblemDetailResponseDTO;
 import gen.io.github.onecx.ai.rs.internal.model.UpdateAIContextRequestDTO;
 import io.github.onecx.ai.domain.daos.AIContextDAO;
 import io.github.onecx.ai.domain.daos.AIKnowledgeBaseDAO;
+import io.github.onecx.ai.domain.daos.AIProviderDAO;
 import io.github.onecx.ai.domain.models.AIContext;
 import io.github.onecx.ai.rs.internal.mappers.AIContextMapper;
+import io.github.onecx.ai.rs.internal.mappers.AIProviderMapper;
 import io.github.onecx.ai.rs.internal.mappers.ExceptionMapper;
 import lombok.extern.slf4j.Slf4j;
 
@@ -41,6 +43,9 @@ public class AIContextRestController implements AiContextInternalApi {
     AIContextDAO dao;
 
     @Inject
+    AIProviderDAO providerDAO;
+
+    @Inject
     ExceptionMapper exceptionMapper;
 
     @Context
@@ -48,6 +53,9 @@ public class AIContextRestController implements AiContextInternalApi {
 
     @Inject
     AIContextMapper mapper;
+
+    @Inject
+    AIProviderMapper providerMapper;
 
     @ServerExceptionMapper
     public RestResponse<ProblemDetailResponseDTO> exception(ConstraintException ex) {
@@ -70,6 +78,10 @@ public class AIContextRestController implements AiContextInternalApi {
         //create AIContext
         var aiContext = mapper.createAIContext(createAIContextRequestDTO);
         aiContext.setKnowledgebase(kb);
+        if (createAIContextRequestDTO.getLlmProvider() != null) {
+            var provider = providerDAO.create(providerMapper.mapLLMProvider(createAIContextRequestDTO.getLlmProvider()));
+            aiContext.setProvider(provider);
+        }
         aiContext = dao.create(aiContext);
 
         //update context list in knowledgebase

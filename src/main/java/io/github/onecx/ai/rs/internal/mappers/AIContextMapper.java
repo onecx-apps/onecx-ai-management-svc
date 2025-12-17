@@ -36,7 +36,7 @@ public interface AIContextMapper {
     @Mapping(target = "description", ignore = true)
     @Mapping(target = "knowledgebase", ignore = true)
     @Mapping(target = "aiKnowledgeVectorDb", ignore = true)
-    @Mapping(source = "llmProvider", target = "provider")
+    @Mapping(target = "provider", ignore = true)
     @Mapping(target = "provider.controlTraceabilityManual", ignore = true)
     @Mapping(target = "provider.modificationCount", ignore = true)
     @Mapping(target = "provider.persisted", ignore = true)
