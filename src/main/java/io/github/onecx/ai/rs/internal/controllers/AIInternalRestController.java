@@ -7,9 +7,6 @@ import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
 import jakarta.ws.rs.core.Response;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import gen.io.github.onecx.ai.rs.internal.AiInternalApi;
 import gen.io.github.onecx.ai.rs.internal.model.ChatRequestDTO;
 import gen.io.github.onecx.ai.rs.internal.model.GenerateRequestDTO;
@@ -39,9 +36,7 @@ public class AIInternalRestController implements AiInternalApi {
     @Override
     @Transactional(Transactional.TxType.NOT_SUPPORTED)
     public Response generate(GenerateRequestDTO generateRequestDTO) {
-        Logger LOGGER = LoggerFactory.getLogger(AIInternalRestController.class);
-        LOGGER.info("AIInternalRestController generate");
-
+        log.info("AIInternalRestController generate");
         return ollamaLlmService.generate(generateRequestDTO);
     }
 }
