@@ -9,9 +9,6 @@ import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
 import jakarta.ws.rs.core.Response;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import dev.langchain4j.data.message.*;
 import dev.langchain4j.model.StreamingResponseHandler;
 import dev.langchain4j.model.chat.StreamingChatLanguageModel;
@@ -23,7 +20,9 @@ import io.github.onecx.ai.domain.criteria.AIContextSearchCriteria;
 import io.github.onecx.ai.domain.daos.AIContextDAO;
 import io.github.onecx.ai.domain.models.AIContext;
 import io.github.onecx.ai.rs.internal.mappers.AIProviderMapper;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @ApplicationScoped
 @Transactional(Transactional.TxType.NOT_SUPPORTED)
 public class OllamaLlmService extends AbstractLlmService {
@@ -38,8 +37,7 @@ public class OllamaLlmService extends AbstractLlmService {
 
     @Override
     public Response generate(GenerateRequestDTO generateRequestDTO) {
-        Logger LOGGER = LoggerFactory.getLogger(OllamaLlmService.class);
-        LOGGER.info("OllamaLlmService");
+        log.info("OllamaLlmService");
 
         Map<String, String> customHeaders = new HashMap<>();
 
