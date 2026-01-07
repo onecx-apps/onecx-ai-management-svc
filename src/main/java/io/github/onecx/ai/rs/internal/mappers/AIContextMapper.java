@@ -40,6 +40,7 @@ public interface AIContextMapper {
     @Mapping(target = "provider.controlTraceabilityManual", ignore = true)
     @Mapping(target = "provider.modificationCount", ignore = true)
     @Mapping(target = "provider.persisted", ignore = true)
+    @Mapping(target = "provider.id", ignore = true)
     @Mapping(target = "provider.tenantId", ignore = true)
     public abstract AIContext createAIContext(CreateAIContextRequestDTO dto);
 

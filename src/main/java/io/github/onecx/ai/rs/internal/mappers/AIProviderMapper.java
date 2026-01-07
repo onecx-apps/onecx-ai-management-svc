@@ -57,5 +57,4 @@ public interface AIProviderMapper {
     void update(UpdateAIProviderRequestDTO chatDTO, @MappingTarget AIProvider entity);
 
     AIProviderDTO map(AIProvider provider);
-
 }
