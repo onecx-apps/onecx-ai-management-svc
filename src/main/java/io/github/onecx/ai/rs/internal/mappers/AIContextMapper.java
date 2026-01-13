@@ -42,7 +42,7 @@ public interface AIContextMapper {
     @Mapping(target = "provider.persisted", ignore = true)
     @Mapping(target = "provider.id", ignore = true)
     @Mapping(target = "provider.tenantId", ignore = true)
-    public abstract AIContext createAIContext(CreateAIContextRequestDTO dto);
+    AIContext createAIContext(CreateAIContextRequestDTO dto);
 
     @Mapping(target = "creationDate", ignore = true)
     @Mapping(target = "creationUser", ignore = true)
@@ -65,7 +65,7 @@ public interface AIContextMapper {
     @Mapping(target = "provider.modificationCount", ignore = true)
     @Mapping(target = "provider.persisted", ignore = true)
     @Mapping(target = "provider.tenantId", ignore = true)
-    public abstract AIContext updateAIContext(UpdateAIContextRequestDTO dto,
+    AIContext updateAIContext(UpdateAIContextRequestDTO dto,
             @MappingTarget AIContext entity);
 
     @Mapping(target = "vectorDb", ignore = true)
@@ -77,18 +77,18 @@ public interface AIContextMapper {
     @Mapping(target = "removeDbsItem", ignore = true)
     @Mapping(source = "provider", target = "llmProvider")
     @Mapping(target = "llmProvider.modificationCount", ignore = true)
-    public abstract AIContextDTO map(AIContext aiContext);
+    AIContextDTO map(AIContext aiContext);
 
     @Mapping(target = "description", ignore = true)
-    public abstract AIContextSearchCriteria map(AIContextSearchCriteriaDTO dto);
+    AIContextSearchCriteria map(AIContextSearchCriteriaDTO dto);
 
     @Mapping(target = "removeStreamItem", ignore = true)
-    public abstract AIContextPageResultDTO mapPage(PageResult<AIContext> page);
+    AIContextPageResultDTO mapPage(PageResult<AIContext> page);
 
-    public abstract List<AIContextDTO> mapContextList(List<AIContext> items);
+    List<AIContextDTO> mapContextList(List<AIContext> items);
 
     @Named("AIKnowlegeUrlHashSetToList")
-    public static List<AIKnowledgeUrlDTO> mapKnowledgeUrlDtoList(Set<AIKnowledgeUrl> value) {
+    static List<AIKnowledgeUrlDTO> mapKnowledgeUrlDtoList(Set<AIKnowledgeUrl> value) {
         List<AIKnowledgeUrlDTO> aiKnowledgeUrlDTOs = new ArrayList<>();
         if (value != null) {
             for (AIKnowledgeUrl aiKnowledgeUrl : value) {
@@ -106,7 +106,7 @@ public interface AIContextMapper {
     }
 
     @Named("AIKnowledgeDatabaseHashSetToList")
-    public static List<AIKnowledgeDatabaseDTO> mapKnowledgeDatabaseDtoList(Set<AIKnowledgeDatabase> knowledgeDatabases) {
+    static List<AIKnowledgeDatabaseDTO> mapKnowledgeDatabaseDtoList(Set<AIKnowledgeDatabase> knowledgeDatabases) {
         List<AIKnowledgeDatabaseDTO> aiKnowledgeDatabaseDTOs = new ArrayList<>();
         if (knowledgeDatabases != null) {
             for (AIKnowledgeDatabase aiKnowledgeDatabase : knowledgeDatabases) {

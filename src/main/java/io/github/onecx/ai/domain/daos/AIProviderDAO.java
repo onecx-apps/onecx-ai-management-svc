@@ -53,10 +53,6 @@ public class AIProviderDAO extends AbstractDAO<AIProvider> {
                 cq.where(cb.like(root.get(AIProvider_.description), QueryCriteriaUtil.wildcard(criteria.getDescription())));
             }
 
-            if (criteria.getTenandId() != null) {
-                cq.where(cb.equal(root.get(AIProvider_.tenantId), criteria.getTenandId()));
-            }
-
             if (criteria.getAppId() != null) {
                 cq.where(cb.equal(root.get(AIProvider_.appId), criteria.getAppId()));
             }

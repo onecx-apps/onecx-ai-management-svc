@@ -25,7 +25,7 @@ public interface AIKnowledgeUrlMapper {
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "tenantId", ignore = true)
     @Mapping(target = "aiContext", ignore = true)
-    public abstract AIKnowledgeUrl createKnowledgeUrl(CreateAIKnowledgeUrlRequestDTO dto);
+    AIKnowledgeUrl createKnowledgeUrl(CreateAIKnowledgeUrlRequestDTO dto);
 
     @Mapping(target = "creationDate", ignore = true)
     @Mapping(target = "creationUser", ignore = true)
@@ -37,10 +37,10 @@ public interface AIKnowledgeUrlMapper {
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "tenantId", ignore = true)
     @Mapping(target = "aiContext", ignore = true)
-    public abstract AIKnowledgeUrl updateKnowledgeUrl(UpdateAIKnowledgeUrlRequestDTO dto,
+    AIKnowledgeUrl updateKnowledgeUrl(UpdateAIKnowledgeUrlRequestDTO dto,
             @MappingTarget AIKnowledgeUrl entity);
 
-    public abstract AIKnowledgeUrlDTO map(AIKnowledgeUrl aiKnowledgeUrl);
+    AIKnowledgeUrlDTO map(AIKnowledgeUrl aiKnowledgeUrl);
 
-    public abstract List<AIKnowledgeUrlDTO> mapUrlList(List<AIKnowledgeUrl> items);
+    List<AIKnowledgeUrlDTO> mapUrlList(List<AIKnowledgeUrl> items);
 }

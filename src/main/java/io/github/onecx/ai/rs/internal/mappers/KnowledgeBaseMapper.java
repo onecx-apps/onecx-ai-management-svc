@@ -47,7 +47,7 @@ public interface KnowledgeBaseMapper {
     @Mapping(target = "contexts", ignore = true)
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "tenantId", ignore = true)
-    public abstract AIKnowledgeBase updateAIKnowledgeBase(UpdateAIKnowledgeBaseRequestDTO dto,
+    AIKnowledgeBase updateAIKnowledgeBase(UpdateAIKnowledgeBaseRequestDTO dto,
             @MappingTarget AIKnowledgeBase entity);
 
     @Mapping(target = "removeContextsItem", ignore = true)
@@ -55,9 +55,9 @@ public interface KnowledgeBaseMapper {
     AIKnowledgeBaseDTO map(AIKnowledgeBase knowledgeBase);
 
     @Mapping(target = "description", ignore = true)
-    public abstract AIKnowledgeBaseSearchCriteria map(AIKnowledgeBaseSearchCriteriaDTO dto);
+    AIKnowledgeBaseSearchCriteria map(AIKnowledgeBaseSearchCriteriaDTO dto);
 
     @Mapping(target = "removeStreamItem", ignore = true)
-    public abstract AIKnowledgeBasePageResultDTO mapPage(PageResult<AIKnowledgeBase> page);
+    AIKnowledgeBasePageResultDTO mapPage(PageResult<AIKnowledgeBase> page);
 
 }
