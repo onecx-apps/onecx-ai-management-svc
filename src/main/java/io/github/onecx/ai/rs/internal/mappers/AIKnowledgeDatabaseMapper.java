@@ -24,7 +24,7 @@ public interface AIKnowledgeDatabaseMapper {
     @Mapping(target = "tenantId", ignore = true)
     @Mapping(target = "aiContext", ignore = true)
     @Mapping(target = "usr", source = "user")
-    public abstract AIKnowledgeDatabase createKnowledgeDatabase(CreateAIKnowledgeDatabaseRequestDTO dto);
+    AIKnowledgeDatabase createKnowledgeDatabase(CreateAIKnowledgeDatabaseRequestDTO dto);
 
     @Mapping(target = "creationDate", ignore = true)
     @Mapping(target = "creationUser", ignore = true)
@@ -37,14 +37,14 @@ public interface AIKnowledgeDatabaseMapper {
     @Mapping(target = "tenantId", ignore = true)
     @Mapping(target = "aiContext", ignore = true)
     @Mapping(target = "usr", ignore = true)
-    public abstract AIKnowledgeDatabase updateKnowledgeDatabase(UpdateAIKnowledgeDatabaseRequestDTO dto,
+    AIKnowledgeDatabase updateKnowledgeDatabase(UpdateAIKnowledgeDatabaseRequestDTO dto,
             @MappingTarget AIKnowledgeDatabase entity);
 
     @Mapping(target = "user", source = "usr")
     @Mapping(target = "pwd", ignore = true)
     @Mapping(target = "tables", ignore = true)
     @Mapping(target = "removeTablesItem", ignore = true)
-    public abstract AIKnowledgeDatabaseDTO map(AIKnowledgeDatabase aiKnowledgeDatabase);
+    AIKnowledgeDatabaseDTO map(AIKnowledgeDatabase aiKnowledgeDatabase);
 
-    public abstract List<AIKnowledgeDatabaseDTO> mapDatabaseList(List<AIKnowledgeDatabase> items);
+    List<AIKnowledgeDatabaseDTO> mapDatabaseList(List<AIKnowledgeDatabase> items);
 }

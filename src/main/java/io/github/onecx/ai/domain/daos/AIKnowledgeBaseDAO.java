@@ -54,10 +54,6 @@ public class AIKnowledgeBaseDAO extends AbstractDAO<AIKnowledgeBase> {
                         cb.like(root.get(AIKnowledgeBase_.description), QueryCriteriaUtil.wildcard(criteria.getDescription())));
             }
 
-            if (criteria.getTenandId() != null) {
-                cq.where(cb.equal(root.get(AIKnowledgeBase_.tenantId), criteria.getTenandId()));
-            }
-
             if (criteria.getAppId() != null) {
                 cq.where(cb.equal(root.get(AIKnowledgeBase_.appId), criteria.getAppId()));
             }

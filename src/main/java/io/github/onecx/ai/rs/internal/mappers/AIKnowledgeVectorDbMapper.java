@@ -24,7 +24,7 @@ public interface AIKnowledgeVectorDbMapper {
     @Mapping(target = "tenantId", ignore = true)
     @Mapping(target = "aiContext", ignore = true)
     @Mapping(target = "vdb", source = "vdbUrl")
-    public abstract AIKnowledgeVectorDb createKnowledgeVectorDb(CreateAIKnowledgeVectorDbRequestDTO dto);
+    AIKnowledgeVectorDb createKnowledgeVectorDb(CreateAIKnowledgeVectorDbRequestDTO dto);
 
     @Mapping(target = "creationDate", ignore = true)
     @Mapping(target = "creationUser", source = "user")
@@ -37,11 +37,11 @@ public interface AIKnowledgeVectorDbMapper {
     @Mapping(target = "tenantId", ignore = true)
     @Mapping(target = "vdb", source = "vdbUrl")
     @Mapping(target = "aiContext", ignore = true)
-    public abstract AIKnowledgeVectorDb updateKnowledgeVectorDb(UpdateAIKnowledgeVectorDbRequestDTO dto,
+    AIKnowledgeVectorDb updateKnowledgeVectorDb(UpdateAIKnowledgeVectorDbRequestDTO dto,
             @MappingTarget AIKnowledgeVectorDb entity);
 
     @Mapping(target = "vdbUrl", source = "vdb")
     @Mapping(target = "user", source = "creationUser")
     @Mapping(target = "pwd", ignore = true)
-    public abstract AIKnowledgeVectorDbDTO map(AIKnowledgeVectorDb aiKnowledgeVectorDb);
+    AIKnowledgeVectorDbDTO map(AIKnowledgeVectorDb aiKnowledgeVectorDb);
 }

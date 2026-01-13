@@ -1187,9 +1187,7 @@ components:
         apiKey:
           type: string          
         appId:
-          type: string                                      
-        tenandId:
-          type: string          
+          type: string
         pageNumber:
           format: int32
           description: The number of page.
@@ -1209,9 +1207,7 @@ components:
         name:
           type: string
         appId:
-          type: string                                      
-        tenandId:
-          type: string          
+          type: string
         pageNumber:
           format: int32
           description: The number of page.
@@ -1231,9 +1227,7 @@ components:
         name:
           type: string
         appId:
-          type: string                                      
-        tenandId:
-          type: string          
+          type: string
         pageNumber:
           format: int32
           description: The number of page.
@@ -1670,6 +1664,10 @@ components:
       properties:
         name:
           type: string
+        appId:
+          type: string
+        description:
+          type: string
         llmSystemMessage:
           type: string
         llmProvider:
@@ -1694,6 +1692,10 @@ components:
       type: object
       properties:
         name:
+          type: string
+        appId:
+          type: string
+        description:
           type: string
         llmSystemMessage:
           type: string
@@ -1732,6 +1734,10 @@ components:
         id:
           type: string
         name:
+          type: string
+        appId:
+          type: string
+        description:
           type: string
         llmSystemMessage:
           type: string

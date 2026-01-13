@@ -15,8 +15,6 @@ public class AIKnowledgeBaseSearchCriteria {
 
     private String description;
 
-    private String tenandId;
-
     private String appId;
 
     private Integer pageNumber;

@@ -25,7 +25,7 @@ public interface AIKnowledgeDocumentMapper {
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "tenantId", ignore = true)
     @Mapping(target = "aiContext", ignore = true)
-    public abstract AIKnowledgeDocument createKnowledgeDocument(CreateAIKnowledgeDocumentRequestDTO dto);
+    AIKnowledgeDocument createKnowledgeDocument(CreateAIKnowledgeDocumentRequestDTO dto);
 
     @Mapping(target = "creationDate", ignore = true)
     @Mapping(target = "creationUser", ignore = true)
@@ -36,16 +36,16 @@ public interface AIKnowledgeDocumentMapper {
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "tenantId", ignore = true)
     @Mapping(target = "aiContext", ignore = true)
-    public abstract AIKnowledgeDocument updateKnowledgeDocument(UpdateAIKnowledgeDocumentRequestDTO dto,
+    AIKnowledgeDocument updateKnowledgeDocument(UpdateAIKnowledgeDocumentRequestDTO dto,
             @MappingTarget AIKnowledgeDocument entity);
 
     AIKnowledgeDocumentSearchCriteria mapSearch(AIKnowledgeDocumentSearchCriteriaDTO criteriaDTO);
 
-    public abstract AIKnowledgeDocumentDTO map(AIKnowledgeDocument aiKnowledgeDocument);
+    AIKnowledgeDocumentDTO map(AIKnowledgeDocument aiKnowledgeDocument);
 
     @Mapping(target = "removeStreamItem", ignore = true)
     AIKnowledgeDocumentPageResultDTO mapSearchResult(PageResult<AIKnowledgeDocument> pageResult);
 
-    public abstract List<AIKnowledgeDocumentDTO> mapDocumentList(List<AIKnowledgeDocument> items);
+    List<AIKnowledgeDocumentDTO> mapDocumentList(List<AIKnowledgeDocument> items);
 
 }

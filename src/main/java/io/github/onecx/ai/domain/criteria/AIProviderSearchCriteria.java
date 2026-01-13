@@ -23,8 +23,6 @@ public class AIProviderSearchCriteria {
 
     private String apiKey;
 
-    private String tenandId;
-
     private String appId;
 
     private Integer pageNumber;
