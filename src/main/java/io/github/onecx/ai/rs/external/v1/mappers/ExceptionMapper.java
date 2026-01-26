@@ -1,10 +1,9 @@
-package io.github.onecx.ai.rs.internal.mappers;
+package io.github.onecx.ai.rs.external.v1.mappers;
 
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import jakarta.persistence.OptimisticLockException;
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.ConstraintViolationException;
 import jakarta.validation.Path;
@@ -14,7 +13,6 @@ import org.jboss.resteasy.reactive.RestResponse;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.tkit.quarkus.jpa.exceptions.ConstraintException;
-import org.tkit.quarkus.log.cdi.LogService;
 import org.tkit.quarkus.rs.mappers.OffsetDateTimeMapper;
 
 import gen.io.github.onecx.ai.rs.internal.model.ProblemDetailInvalidParamDTO;
@@ -22,23 +20,17 @@ import gen.io.github.onecx.ai.rs.internal.model.ProblemDetailParamDTO;
 import gen.io.github.onecx.ai.rs.internal.model.ProblemDetailResponseDTO;
 
 @Mapper(uses = { OffsetDateTimeMapper.class })
-public abstract class ExceptionMapper {
+public interface ExceptionMapper {
 
-    public RestResponse<ProblemDetailResponseDTO> constraint(ConstraintViolationException ex) {
-        var dto = exception(ErrorKeys.CONSTRAINT_VIOLATIONS.name(), ex.getMessage());
+    default RestResponse<ProblemDetailResponseDTO> constraint(ConstraintViolationException ex) {
+        var dto = exception("CONSTRAINT_VIOLATIONS", ex.getMessage());
         dto.setInvalidParams(createErrorValidationResponse(ex.getConstraintViolations()));
         return RestResponse.status(Response.Status.BAD_REQUEST, dto);
     }
 
-    public RestResponse<ProblemDetailResponseDTO> exception(ConstraintException ex) {
+    default RestResponse<ProblemDetailResponseDTO> exception(ConstraintException ex) {
         var dto = exception(ex.getMessageKey().name(), ex.getConstraints());
         dto.setParams(map(ex.namedParameters));
-        return RestResponse.status(Response.Status.BAD_REQUEST, dto);
-    }
-
-    @LogService(log = false)
-    public RestResponse<ProblemDetailResponseDTO> optimisticLock(OptimisticLockException ex) {
-        var dto = exception(ErrorKeys.OPTIMISTIC_LOCK.name(), ex.getMessage());
         return RestResponse.status(Response.Status.BAD_REQUEST, dto);
     }
 
@@ -46,9 +38,9 @@ public abstract class ExceptionMapper {
     @Mapping(target = "params", ignore = true)
     @Mapping(target = "invalidParams", ignore = true)
     @Mapping(target = "removeInvalidParamsItem", ignore = true)
-    public abstract ProblemDetailResponseDTO exception(String errorCode, String detail);
+    ProblemDetailResponseDTO exception(String errorCode, String detail);
 
-    public List<ProblemDetailParamDTO> map(Map<String, Object> params) {
+    default List<ProblemDetailParamDTO> map(Map<String, Object> params) {
         if (params == null) {
             return List.of();
         }
@@ -62,20 +54,14 @@ public abstract class ExceptionMapper {
         }).toList();
     }
 
-    public abstract List<ProblemDetailInvalidParamDTO> createErrorValidationResponse(
+    List<ProblemDetailInvalidParamDTO> createErrorValidationResponse(
             Set<ConstraintViolation<?>> constraintViolation);
 
     @Mapping(target = "name", source = "propertyPath")
     @Mapping(target = "message", source = "message")
-    public abstract ProblemDetailInvalidParamDTO createError(ConstraintViolation<?> constraintViolation);
+    ProblemDetailInvalidParamDTO createError(ConstraintViolation<?> constraintViolation);
 
-    public String mapPath(Path path) {
+    default String mapPath(Path path) {
         return path.toString();
-    }
-
-    public enum ErrorKeys {
-
-        OPTIMISTIC_LOCK,
-        CONSTRAINT_VIOLATIONS;
     }
 }

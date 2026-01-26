@@ -5,3 +5,14 @@ app:
     tag: 999-SNAPSHOT
   db:
     enabled: true
+  operator:
+    keycloak:
+      client:
+        enabled: true
+        spec:
+          kcConfig:
+            defaultClientScopes: [ ocx-tn:read ]
+    microservice:
+      spec:
+        description: OneCX AI Management Backend Service
+        name: OneCX AI Management SVC

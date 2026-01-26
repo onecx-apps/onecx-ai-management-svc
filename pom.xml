@@ -12,25 +12,7 @@
 
     <artifactId>onecx-ai-management-svc</artifactId>
     <version>999-SNAPSHOT</version>
-
-    <!--dependencyConvergence error diffrent version of okhttp3 -->
-    <dependencyManagement>
-        <dependencies>
-            <dependency>
-                <groupId>com.squareup.okhttp3</groupId>
-                <artifactId>okhttp</artifactId>
-                <version>4.12.0</version>
-            </dependency>
-            <dependency>
-                <groupId>com.squareup.okio</groupId>
-                <artifactId>okio</artifactId>
-                <version>3.6.0</version>
-            </dependency>
-        </dependencies>
-    </dependencyManagement>
-
     <dependencies>
-        <!-- 1000kit -->
         <dependency>
             <groupId>org.tkit.onecx.quarkus</groupId>
             <artifactId>onecx-core</artifactId>
@@ -39,10 +21,19 @@
             <groupId>org.tkit.onecx.quarkus</groupId>
             <artifactId>onecx-tenant</artifactId>
         </dependency>
+        <!-- 1000kit -->
+        <dependency>
+            <groupId>org.tkit.quarkus.lib</groupId>
+            <artifactId>tkit-quarkus-rest-context</artifactId>
+        </dependency>
         <dependency>
             <groupId>org.tkit.quarkus.lib</groupId>
             <artifactId>tkit-quarkus-jpa-tenant</artifactId>
-        </dependency>        
+        </dependency>
+        <dependency>
+            <groupId>org.tkit.quarkus.lib</groupId>
+            <artifactId>tkit-quarkus-data-import</artifactId>
+        </dependency>
         <dependency>
             <groupId>org.tkit.quarkus.lib</groupId>
             <artifactId>tkit-quarkus-jpa</artifactId>
@@ -64,8 +55,8 @@
             <artifactId>tkit-quarkus-rest</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.tkit.quarkus.lib</groupId>
-            <artifactId>tkit-quarkus-rest-context</artifactId>
+            <groupId>io.quarkus</groupId>
+            <artifactId>quarkus-oidc</artifactId>
         </dependency>
 
         <!-- QUARKUS -->
@@ -107,6 +98,10 @@
         </dependency>
         <dependency>
             <groupId>io.quarkus</groupId>
+            <artifactId>quarkus-smallrye-context-propagation</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.quarkus</groupId>
             <artifactId>quarkus-smallrye-openapi</artifactId>
         </dependency>
         <dependency>
@@ -127,17 +122,17 @@
             <groupId>org.mapstruct</groupId>
             <artifactId>mapstruct</artifactId>
         </dependency>
+        <!-- LANGCHAIN4J -->
         <dependency>
-            <groupId>dev.langchain4j</groupId>
-            <artifactId>langchain4j-ollama</artifactId>
-            <version>0.35.0</version>
+            <groupId>io.quarkiverse.langchain4j</groupId>
+            <artifactId>quarkus-langchain4j-ollama</artifactId>
+            <version>1.5.0</version>
         </dependency>
         <dependency>
-            <groupId>org.tinylog</groupId>
-            <artifactId>tinylog-impl</artifactId>
-            <version>2.6.2</version>
+            <groupId>io.quarkiverse.langchain4j</groupId>
+            <artifactId>quarkus-langchain4j-mcp</artifactId>
+            <version>1.5.0</version>
         </dependency>
-
         <!-- TEST -->
         <dependency>
             <groupId>io.quarkus</groupId>
@@ -160,18 +155,27 @@
             <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>io.quarkus</groupId>
-            <artifactId>quarkus-test-keycloak-server</artifactId>
-            <scope>test</scope>
+            <groupId>io.quarkiverse.mockserver</groupId>
+            <artifactId>quarkus-mockserver</artifactId>
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>io.quarkiverse.mockserver</groupId>
             <artifactId>quarkus-mockserver-test</artifactId>
+            <exclusions>
+                <exclusion>
+                    <groupId>io.swagger.parser.v3</groupId>
+                    <artifactId>swagger-parser</artifactId>
+                </exclusion>
+            </exclusions>
             <scope>test</scope>
-        </dependency>        
+        </dependency>
+        <dependency>
+            <groupId>org.tkit.quarkus.lib</groupId>
+            <artifactId>tkit-quarkus-security-test</artifactId>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
-
-
     <build>
         <plugins>
             <plugin>
@@ -187,6 +191,7 @@
                     <generateSupportingFiles>false</generateSupportingFiles>
                     <addCompileSourceRoot>true</addCompileSourceRoot>
                     <library>quarkus</library>
+                    <additionalProperties>onecx-scopes=true</additionalProperties>
                     <configOptions>
                         <sourceFolder>/</sourceFolder>
                         <openApiNullable>false</openApiNullable>
@@ -209,10 +214,23 @@
                             <goal>generate</goal>
                         </goals>
                         <configuration>
-                            <inputSpec>src/main/openapi/onecx-ai-internal-openapi.yaml</inputSpec>
+                            <inputSpec>src/main/openapi/onecx-ai-internal.yaml</inputSpec>
                             <apiPackage>gen.io.github.onecx.ai.rs.internal</apiPackage>
                             <modelPackage>gen.io.github.onecx.ai.rs.internal.model</modelPackage>
                             <modelNameSuffix>DTO</modelNameSuffix>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>external-v1</id>
+                        <goals>
+                            <goal>generate</goal>
+                        </goals>
+                        <configuration>
+                            <inputSpec>src/main/openapi/onecx-ai-v1.yaml</inputSpec>
+                            <apiPackage>gen.io.github.onecx.ai.rs.external.v1</apiPackage>
+                            <modelPackage>gen.io.github.onecx.ai.rs.external.v1.model</modelPackage>
+                            <modelNameSuffix>DTOV1</modelNameSuffix>
+                            <apiNameSuffix>V1Api</apiNameSuffix>
                         </configuration>
                     </execution>
                 </executions>
