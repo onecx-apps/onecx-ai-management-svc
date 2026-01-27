@@ -7,10 +7,12 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 import dev.langchain4j.agent.tool.ToolSpecification;
+import io.quarkus.runtime.annotations.RegisterForReflection;
 
 /**
  * Registry that holds all available MCP tools and allows lookup by tool name.
  */
+@RegisterForReflection
 public record McpToolRegistry(
         List<McpTool> tools,
         Map<String, McpTool> toolsByName) {
