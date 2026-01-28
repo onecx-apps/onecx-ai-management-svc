@@ -73,12 +73,12 @@
         </createTable>
     </changeSet>
     <changeSet author="dev (generated)" id="1769092345352-4">
-        <createTable tableName="context_mcp_server">
-            <column name="context_id" type="VARCHAR(255)">
-                <constraints nullable="false" primaryKey="true" primaryKeyName="context_mcp_server_pkey"/>
+        <createTable tableName="configuration_mcp_server">
+            <column name="configuration_id" type="VARCHAR(255)">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="configuration_mcp_server_pkey"/>
             </column>
             <column name="mcp_server_id" type="VARCHAR(255)">
-                <constraints nullable="false" primaryKey="true" primaryKeyName="context_mcp_server_pkey"/>
+                <constraints nullable="false" primaryKey="true" primaryKeyName="configuration_mcp_server_pkey"/>
             </column>
         </createTable>
         <createTable tableName="dataimportlog">
@@ -93,10 +93,10 @@
         </createTable>
     </changeSet>
     <changeSet author="dev (generated)" id="1769092345352-5">
-        <addForeignKeyConstraint baseColumnNames="mcp_server_id" baseTableName="context_mcp_server" constraintName="fk4trvf9l7iohs5mhcksav2css8" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="guid" referencedTableName="mcp_server" validate="true"/>
+        <addForeignKeyConstraint baseColumnNames="mcp_server_id" baseTableName="configuration_mcp_server" constraintName="fk4trvf9l7iohs5mhcksav2css8" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="guid" referencedTableName="mcp_server" validate="true"/>
     </changeSet>
     <changeSet author="dev (generated)" id="1769092345352-6">
-        <addForeignKeyConstraint baseColumnNames="context_id" baseTableName="context_mcp_server" constraintName="fkc8q49aqexiosj3490nwknbqtf" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="guid" referencedTableName="configuration" validate="true"/>
+        <addForeignKeyConstraint baseColumnNames="configuration_id" baseTableName="configuration_mcp_server" constraintName="fkc8q49aqexiosj3490nwknbqtf" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="guid" referencedTableName="configuration" validate="true"/>
     </changeSet>
     <changeSet author="dev (generated)" id="1769092345352-7">
         <addForeignKeyConstraint baseColumnNames="provider_id" baseTableName="configuration" constraintName="fkkm6v785dqwlv8ag2blsb6xtld" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="guid" referencedTableName="provider" validate="true"/>

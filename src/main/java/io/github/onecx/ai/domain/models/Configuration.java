@@ -40,7 +40,7 @@ public class Configuration extends TraceableEntity {
     private Filter filter;
 
     @ManyToMany
-    @JoinTable(name = "CONTEXT_MCP_SERVER", joinColumns = @JoinColumn(name = "CONTEXT_ID"), inverseJoinColumns = @JoinColumn(name = "MCP_SERVER_ID"))
+    @JoinTable(name = "CONFIGURATION_MCP_SERVER", joinColumns = @JoinColumn(name = "CONFIGURATION_ID"), inverseJoinColumns = @JoinColumn(name = "MCP_SERVER_ID"))
     private Set<MCPServer> mcpServers;
 
 }
