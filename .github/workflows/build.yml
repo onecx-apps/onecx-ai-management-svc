@@ -12,5 +12,5 @@ jobs:
     uses: onecx-apps/ci-quarkus/.github/workflows/build.yml@v2
     secrets: inherit
     with:
-      native: false
+      native: true
       helmEventTargetRepository: onecx-apps/onecx-ai
