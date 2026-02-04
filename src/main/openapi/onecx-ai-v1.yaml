@@ -88,9 +88,6 @@ components:
     creationDate:
      type: integer
      format: int64
-    reliability:
-     type: integer
-     format: int64
   Conversation:
    type: object
    properties:
