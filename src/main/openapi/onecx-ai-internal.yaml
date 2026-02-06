@@ -131,9 +131,7 @@ paths:
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/ConfigurationPageResult'
+                $ref: '#/components/schemas/ConfigurationPageResult'
 
   /internal/providers:
     post:
@@ -263,9 +261,7 @@ paths:
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/ProviderPageResult'
+                $ref: '#/components/schemas/ProviderPageResult'
   /internal/mcpServer:
     post:
       security:
