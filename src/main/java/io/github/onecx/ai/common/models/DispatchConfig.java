@@ -53,6 +53,20 @@ public interface DispatchConfig {
         @WithName("log-requests")
         @WithDefault("false")
         boolean logRequests();
+
+        /**
+         * Maximum number of retries for tool execution in MCP processing
+         */
+        @WithName("max-tool-execution-retries")
+        @WithDefault("3")
+        long maxToolExecutionRetries();
+
+        /**
+         * Delay in milliseconds between retries for tool execution in MCP processing
+         */
+        @WithName("tool-execution-retry-delay")
+        @WithDefault("1000")
+        long toolExecutionRetryDelay();
     }
 
     interface ProviderConfig {

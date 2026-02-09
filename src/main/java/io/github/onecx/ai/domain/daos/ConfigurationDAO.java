@@ -29,6 +29,7 @@ public class ConfigurationDAO extends AbstractDAO<Configuration> {
 
             List<Predicate> predicates = new ArrayList<>();
             addSearchStringPredicate(predicates, cb, root.get(Configuration_.NAME), criteria.getName());
+            addSearchStringPredicate(predicates, cb, root.get(Configuration_.DESCRIPTION), criteria.getDescription());
 
             if (!predicates.isEmpty()) {
                 cq.where(predicates.toArray(new Predicate[] {}));

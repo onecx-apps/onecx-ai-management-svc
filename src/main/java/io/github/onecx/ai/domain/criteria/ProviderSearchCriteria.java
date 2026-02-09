@@ -11,6 +11,8 @@ public class ProviderSearchCriteria {
 
     private String name;
 
+    private String description;
+
     private String llmUrl;
 
     private String modelName;

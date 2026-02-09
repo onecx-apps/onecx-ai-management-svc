@@ -159,6 +159,12 @@ h| Version
 | 
 | 3.27.1
 
+| quarkus-smallrye-fault-tolerance
+
+| 
+| 
+| 3.27.1
+
 | quarkus-langchain4j-ollama
 
 | 

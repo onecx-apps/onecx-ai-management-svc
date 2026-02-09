@@ -25,8 +25,6 @@ public class OllamaLlmService extends AbstractLlmService {
 
     @Override
     public Response chat(Configuration configuration, ChatRequestDTOV1 chatRequestDTO) {
-        log.info("OllamaLlmService.chat()");
-
         // Resolve configuration by queryContext
         Provider provider = configuration.getProvider();
         // Build message list: history (if present) + current message
@@ -72,7 +70,14 @@ public class OllamaLlmService extends AbstractLlmService {
             }
 
             ChatRequest chatRequest = chatRequestBuilder.build();
-            ChatResponse chatResponse = model.chat(chatRequest);
+            ChatResponse chatResponse = modelChatRequestWithRetries(model, chatRequest);
+
+            if (chatResponse == null) {
+                log.error("Failed to get response from model after retries");
+                return Response.status(Response.Status.BAD_REQUEST)
+                        .entity("Failed to get response from model")
+                        .build();
+            }
 
             // Handle tool execution loop
             int iterations = 0;
@@ -80,9 +85,13 @@ public class OllamaLlmService extends AbstractLlmService {
                 iterations++;
                 log.info("Tool execution iteration {}", iterations);
 
-                // Execute tools and get result messages
-                List<ChatMessage> toolResultMessages = executeToolRequests(chatResponse, toolRegistry);
-                messages.addAll(toolResultMessages);
+                try {
+                    // Execute tools and get result messages
+                    List<ChatMessage> toolResultMessages = executeToolRequests(chatResponse, toolRegistry);
+                    messages.addAll(toolResultMessages);
+                } catch (Exception e) {
+                    continue;
+                }
 
                 // Send follow-up request with tool results
                 ChatRequest followUpRequest = ChatRequest.builder()
@@ -90,7 +99,15 @@ public class OllamaLlmService extends AbstractLlmService {
                         .toolSpecifications(toolSpecifications)
                         .build();
 
-                chatResponse = model.chat(followUpRequest);
+                chatResponse = modelChatRequestWithRetries(model, followUpRequest);
+
+                // Check if follow-up request failed
+                if (chatResponse == null) {
+                    log.error("Failed to get follow-up response from model during tool execution iteration {}", iterations);
+                    return Response.status(Response.Status.BAD_REQUEST)
+                            .entity("Failed to get follow-up response from model during tool execution")
+                            .build();
+                }
             }
 
             if (iterations >= dispatchConfig.mcpConfig().maxIterations()) {
@@ -101,6 +118,11 @@ public class OllamaLlmService extends AbstractLlmService {
             String responseMessage = chatResponse.aiMessage().text();
             var responseDTO = mapToChatMessageResponseDTO(responseMessage);
             return Response.ok(responseDTO).build();
+        } catch (Exception e) {
+            log.error("Unexpected error during chat processing", e);
+            return Response.status(Response.Status.BAD_REQUEST)
+                    .entity("Unexpected error: " + e.getMessage())
+                    .build();
         } finally {
             toolRegistry.close();
         }

@@ -44,8 +44,6 @@ public class LlmServiceFactory {
     private AbstractLlmService getServiceForProvider(ProviderType providerType) {
         return switch (providerType) {
             case OLLAMA -> ollamaLlmService;
-            //            case OPENAI -> throw new UnsupportedOperationException("OpenAI service not yet implemented");
-            //            case ANTHROPIC -> throw new UnsupportedOperationException("Anthropic service not yet implemented");
         };
     }
 }

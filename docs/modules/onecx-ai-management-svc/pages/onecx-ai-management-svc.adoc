@@ -91,6 +91,48 @@ endif::add-copy-button-to-env-var[]
 |boolean
 |`+++false+++`
 
+a| [[onecx-ai-management-svc_onecx-ai-dispatch-mcp-max-tool-execution-retries]] [.property-path]##link:#onecx-ai-management-svc_onecx-ai-dispatch-mcp-max-tool-execution-retries[`onecx.ai.dispatch.mcp.max-tool-execution-retries`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++onecx.ai.dispatch.mcp.max-tool-execution-retries+++[]
+endif::add-copy-button-to-config-props[]
+
+
+[.description]
+--
+Maximum number of retries for tool execution in MCP processing
+
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++ONECX_AI_DISPATCH_MCP_MAX_TOOL_EXECUTION_RETRIES+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++ONECX_AI_DISPATCH_MCP_MAX_TOOL_EXECUTION_RETRIES+++`
+endif::add-copy-button-to-env-var[]
+--
+|long
+|`+++3+++`
+
+a| [[onecx-ai-management-svc_onecx-ai-dispatch-mcp-tool-execution-retry-delay]] [.property-path]##link:#onecx-ai-management-svc_onecx-ai-dispatch-mcp-tool-execution-retry-delay[`onecx.ai.dispatch.mcp.tool-execution-retry-delay`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++onecx.ai.dispatch.mcp.tool-execution-retry-delay+++[]
+endif::add-copy-button-to-config-props[]
+
+
+[.description]
+--
+Delay in milliseconds between retries for tool execution in MCP processing
+
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++ONECX_AI_DISPATCH_MCP_TOOL_EXECUTION_RETRY_DELAY+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++ONECX_AI_DISPATCH_MCP_TOOL_EXECUTION_RETRY_DELAY+++`
+endif::add-copy-button-to-env-var[]
+--
+|long
+|`+++1000+++`
+
 a| [[onecx-ai-management-svc_onecx-ai-dispatch-provider-timeout]] [.property-path]##link:#onecx-ai-management-svc_onecx-ai-dispatch-provider-timeout[`onecx.ai.dispatch.provider.timeout`]##
 ifdef::add-copy-button-to-config-props[]
 config_property_copy_button:+++onecx.ai.dispatch.provider.timeout+++[]

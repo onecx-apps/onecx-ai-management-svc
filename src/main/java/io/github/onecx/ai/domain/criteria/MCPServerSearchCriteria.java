@@ -11,6 +11,8 @@ public class MCPServerSearchCriteria {
 
     private String name;
 
+    private String description;
+
     private String url;
 
     private Integer pageNumber;
