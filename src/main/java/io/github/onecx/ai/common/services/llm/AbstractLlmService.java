@@ -131,8 +131,8 @@ public abstract class AbstractLlmService {
         return chatModel.chat(chatRequest);
     }
 
-    protected ChatResponse modelChatFallback(ChatModel chatModel, ChatRequest chatRequest, Throwable ex) {
-        log.error("Chat request failed after retries. Unable to get response from LLM model", ex);
+    protected ChatResponse modelChatFallback(ChatModel chatModel, ChatRequest chatRequest) {
+        log.error("Chat request failed after retries. Unable to get response from LLM model");
         return null;
     }
 }
