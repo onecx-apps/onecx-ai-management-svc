@@ -8,6 +8,9 @@ import java.util.Map;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 
+import org.eclipse.microprofile.faulttolerance.Fallback;
+import org.eclipse.microprofile.faulttolerance.Retry;
+
 import dev.langchain4j.agent.tool.ToolSpecification;
 import dev.langchain4j.mcp.client.DefaultMcpClient;
 import dev.langchain4j.mcp.client.McpClient;
@@ -54,18 +57,34 @@ public class McpService {
         try {
             // client must stay open for later tool execution
             McpClient client = createMcpClient(mcpServer);
-            List<ToolSpecification> specs = client.listTools();
-
-            log.info("Discovered {} tool(s) from {}", specs.size(), mcpServer.getUrl());
-
-            return specs.stream()
-                    .map(spec -> new McpTool(mcpServer.getUrl(), spec, client))
-                    .toList();
+            try {
+                client.checkHealth();
+                List<ToolSpecification> specs = receiveToolSpecifications(client);
+                log.info("Discovered {} tool(s) from {}", specs.size(), mcpServer.getUrl());
+                return specs.stream()
+                        .map(spec -> new McpTool(mcpServer.getUrl(), spec, client))
+                        .toList();
+            } catch (Exception ex) {
+                log.error("MCP server not available {}: {}", mcpServer.getUrl(), ex.getMessage(), ex);
+                return List.of();
+            }
 
         } catch (Exception e) {
             log.error("Error discovering tools from {}: {}", mcpServer.getUrl(), e.getMessage(), e);
             return List.of();
         }
+    }
+
+    @Retry
+    @Fallback(fallbackMethod = "receiveToolSpecificationsFallback")
+    protected List<ToolSpecification> receiveToolSpecifications(McpClient client) {
+        return client.listTools();
+    }
+
+    private List<ToolSpecification> receiveToolSpecificationsFallback(McpClient client) {
+        log.error("Failed to receive tool specifications after retries: {}",
+                dispatchConfig.mcpConfig().maxToolExecutionRetries());
+        return List.of();
     }
 
     private McpClient createMcpClient(MCPServer mcpServer) {

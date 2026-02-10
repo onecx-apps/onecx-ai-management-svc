@@ -8,16 +8,22 @@ import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.core.Response;
 
+import org.eclipse.microprofile.faulttolerance.Fallback;
+import org.eclipse.microprofile.faulttolerance.Retry;
+
 import dev.langchain4j.agent.tool.ToolExecutionRequest;
 import dev.langchain4j.data.message.AiMessage;
 import dev.langchain4j.data.message.ChatMessage;
 import dev.langchain4j.data.message.SystemMessage;
 import dev.langchain4j.data.message.ToolExecutionResultMessage;
 import dev.langchain4j.data.message.UserMessage;
+import dev.langchain4j.model.chat.ChatModel;
+import dev.langchain4j.model.chat.request.ChatRequest;
 import dev.langchain4j.model.chat.response.ChatResponse;
 import gen.io.github.onecx.ai.rs.external.v1.model.*;
 import io.github.onecx.ai.common.models.DispatchConfig;
 import io.github.onecx.ai.common.services.mcp.McpService;
+import io.github.onecx.ai.common.services.mcp.McpTool;
 import io.github.onecx.ai.common.services.mcp.McpToolRegistry;
 import io.github.onecx.ai.domain.models.Configuration;
 import lombok.extern.slf4j.Slf4j;
@@ -78,14 +84,25 @@ public abstract class AbstractLlmService {
                         "Error: Tool '" + toolName + "' not found"));
                 continue;
             }
-
-            String result = toolOpt.get().execute(toolRequest);
+            String result = executeToolRequestWithRetry(toolOpt.get(), toolRequest);
             log.info("Tool '{}' executed successfully", toolName);
 
             resultMessages.add(ToolExecutionResultMessage.from(toolRequest, result));
         }
 
         return resultMessages;
+    }
+
+    @Retry
+    @Fallback(fallbackMethod = "toolExecutionFallback")
+    protected String executeToolRequestWithRetry(McpTool tool, ToolExecutionRequest toolRequest) {
+        return tool.execute(toolRequest);
+    }
+
+    protected String toolExecutionFallback(McpTool tool, ToolExecutionRequest toolRequest) {
+        log.error("Tool execution failed after {} retries for tool: {}", dispatchConfig.mcpConfig().maxToolExecutionRetries(),
+                toolRequest.name());
+        return "Error: Tool execution failed for '" + toolRequest.name() + "'";
     }
 
     protected List<ChatMessage> mapToLangChainMessages(List<ChatMessageDTOV1> history) {
@@ -106,5 +123,16 @@ public abstract class AbstractLlmService {
         chatMessageDTOV1.setType(ChatMessageDTOV1.TypeEnum.ASSISTANT);
         chatMessageDTOV1.setCreationDate(new Date().getTime());
         return chatMessageDTOV1;
+    }
+
+    @Retry
+    @Fallback(fallbackMethod = "modelChatFallback")
+    protected ChatResponse modelChatRequestWithRetries(ChatModel chatModel, ChatRequest chatRequest) {
+        return chatModel.chat(chatRequest);
+    }
+
+    protected ChatResponse modelChatFallback(ChatModel chatModel, ChatRequest chatRequest) {
+        log.error("Chat request failed after retries. Unable to get response from LLM model");
+        return null;
     }
 }

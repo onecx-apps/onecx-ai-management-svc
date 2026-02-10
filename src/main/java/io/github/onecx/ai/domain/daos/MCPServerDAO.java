@@ -28,6 +28,7 @@ public class MCPServerDAO extends AbstractDAO<MCPServer> {
             var root = cq.from(MCPServer.class);
             List<Predicate> predicates = new ArrayList<>();
             addSearchStringPredicate(predicates, cb, root.get(MCPServer_.NAME), criteria.getName());
+            addSearchStringPredicate(predicates, cb, root.get(MCPServer_.DESCRIPTION), criteria.getDescription());
             addSearchStringPredicate(predicates, cb, root.get(MCPServer_.URL), criteria.getUrl());
 
             if (!predicates.isEmpty()) {

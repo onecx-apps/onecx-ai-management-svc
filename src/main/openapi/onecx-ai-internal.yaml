@@ -16,7 +16,7 @@ paths:
         - oauth2: [ ocx-ai:all, ocx-ai:write ]
       tags:
         - configurationInternal
-      summary: Create an AI Configuration
+      description: Create an Configuration
       operationId: createConfiguration
       requestBody:
         required: true
@@ -43,7 +43,7 @@ paths:
         - oauth2: [ ocx-ai:all, ocx-ai:read ]
       tags:
         - configurationInternal
-      summary: Get Configuration
+      description: Get Configuration
       operationId: getConfiguration
       parameters:
         - name: id
@@ -65,7 +65,7 @@ paths:
         - oauth2: [ ocx-ai:all, ocx-ai:delete ]
       tags:
         - configurationInternal
-      summary: Delete Configuration
+      description: Delete Configuration
       operationId: deleteConfiguration
       parameters:
         - name: id
@@ -74,14 +74,14 @@ paths:
           schema:
             type: string
       responses:
-        '204':
-          description: AI Configuration deleted
+        "204":
+          description: Configuration deleted
     put:
       security:
         - oauth2: [ ocx-ai:all, ocx-ai:write ]
       tags:
         - configurationInternal
-      summary: Update an AI Configuration
+      description: Update an Configuration
       operationId: updateConfiguration
       parameters:
         - name: id
@@ -96,7 +96,7 @@ paths:
             schema:
               $ref: '#/components/schemas/UpdateConfigurationRequest'
       responses:
-        '200':
+        "200":
           description: Configuration updated successfully
           content:
             application/json:
@@ -109,7 +109,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/ProblemDetailResponse'
         "404":
-          description: AI Configuration not found
+          description: Configuration not found
 
   /internal/configurations/search:
     post:
@@ -117,7 +117,7 @@ paths:
         - oauth2: [ ocx-ai:all, ocx-ai:read ]
       tags:
         - configurationInternal
-      summary: Find AI Configuration by Search Criteria
+      description: Find Configuration by Search Criteria
       operationId: findConfigurationBySearchCriteria
       requestBody:
         required: true
@@ -126,12 +126,18 @@ paths:
             schema:
               $ref: '#/components/schemas/ConfigurationSearchCriteria'
       responses:
-        '200':
+        "200":
           description: OK
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ConfigurationPageResult'
+        "400":
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetailResponse'
 
   /internal/providers:
     post:
@@ -139,7 +145,7 @@ paths:
         - oauth2: [ ocx-ai:all, ocx-ai:write ]
       tags:
         - providerInternal
-      summary: Create an AI Provider
+      description: Create an Provider
       operationId: createProvider
       requestBody:
         required: true
@@ -150,12 +156,6 @@ paths:
       responses:
         "201":
           description: New Provider created
-          headers:
-            Location:
-              required: true
-              schema:
-                type: string
-                format: url
           content:
             application/json:
               schema:
@@ -173,7 +173,7 @@ paths:
         - oauth2: [ ocx-ai:all, ocx-ai:read ]
       tags:
         - providerInternal
-      description: Return AI Provider by ID
+      description: Return Provider by ID
       operationId: getProvider
       parameters:
         - name: id
@@ -195,7 +195,7 @@ paths:
         - oauth2: [ ocx-ai:all, ocx-ai:write ]
       tags:
         - providerInternal
-      summary: Update an AI Provider
+      description: Update an Provider
       operationId: updateProvider
       parameters:
         - name: id
@@ -210,7 +210,7 @@ paths:
             schema:
               $ref: '#/components/schemas/UpdateProviderRequest'
       responses:
-        '200':
+        "200":
           description: Provider updated successfully
           content:
             application/json:
@@ -223,13 +223,13 @@ paths:
               schema:
                 $ref: '#/components/schemas/ProblemDetailResponse'
         "404":
-          description: AI Provider not found
+          description: Provider not found
     delete:
       security:
         - oauth2: [ ocx-ai:all, ocx-ai:delete ]
       tags:
         - providerInternal
-      summary: Delete an AI Provider
+      description: Delete an Provider
       operationId: deleteProvider
       parameters:
         - name: id
@@ -238,7 +238,7 @@ paths:
           schema:
             type: string
       responses:
-        '204':
+        "204":
           description: No Content
 
   /internal/providers/search:
@@ -247,7 +247,7 @@ paths:
         - oauth2: [ ocx-ai:all, ocx-ai:read ]
       tags:
         - providerInternal
-      summary: Find AI Providers by Search Criteria
+      description: Find Providers by Search Criteria
       operationId: findProviderBySearchCriteria
       requestBody:
         required: true
@@ -256,19 +256,25 @@ paths:
             schema:
               $ref: '#/components/schemas/ProviderSearchCriteria'
       responses:
-        '200':
+        "200":
           description: OK
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ProviderPageResult'
+        "400":
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetailResponse'
   /internal/mcpServer:
     post:
       security:
         - oauth2: [ ocx-ai:all, ocx-ai:write ]
       tags:
         - mcpServerInternal
-      summary: Create an MCP Server
+      description: Create an MCP Server
       operationId: createMCPServer
       requestBody:
         required: true
@@ -295,7 +301,7 @@ paths:
         - oauth2: [ ocx-ai:all, ocx-ai:read ]
       tags:
         - mcpServerInternal
-      summary: Get MCP Server by id
+      description: Get MCP Server by id
       operationId: getMCPServerById
       parameters:
         - name: id
@@ -317,7 +323,7 @@ paths:
         - oauth2: [ ocx-ai:all, ocx-ai:delete ]
       tags:
         - mcpServerInternal
-      summary: Delete MCP Server by id
+      description: Delete MCP Server by id
       operationId: deleteMCPServerById
       parameters:
         - name: id
@@ -326,14 +332,14 @@ paths:
           schema:
             type: string
       responses:
-        '204':
+        "204":
           description: MCP Server deleted successfully
     put:
       security:
         - oauth2: [ ocx-ai:all, ocx-ai:write ]
       tags:
         - mcpServerInternal
-      summary: Update an MCP Server
+      description: Update an MCP Server
       operationId: updateMCPServerById
       parameters:
         - name: id
@@ -348,7 +354,7 @@ paths:
             schema:
               $ref: '#/components/schemas/UpdateMCPServerRequest'
       responses:
-        '200':
+        "200":
           description: MCP Server updated successfully
           content:
             application/json:
@@ -369,7 +375,7 @@ paths:
         - oauth2: [ ocx-ai:all, ocx-ai:read ]
       tags:
         - mcpServerInternal
-      summary: Find MCPServer by Search Criteria
+      description: Find MCPServer by Search Criteria
       operationId: findMCPServerByCriteria
       requestBody:
         required: true
@@ -378,12 +384,18 @@ paths:
             schema:
               $ref: '#/components/schemas/MCPServerSearchCriteria'
       responses:
-        '200':
+        "200":
           description: OK
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/MCPServerPageResult'
+        "400":
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetailResponse'
 components:
   securitySchemes:
     oauth2:
@@ -449,6 +461,8 @@ components:
           type: string
         name:
           type: string
+        description:
+          type: string
         url:
           type: string
         apiKey:
@@ -502,6 +516,8 @@ components:
           type: string
         name:
           type: string
+        description:
+          type: string
         type:
           $ref: '#/components/schemas/ProviderType'
         llmUrl:
@@ -527,6 +543,8 @@ components:
         id:
           type: string
         name:
+          type: string
+        description:
           type: string
         pageNumber:
           format: int32

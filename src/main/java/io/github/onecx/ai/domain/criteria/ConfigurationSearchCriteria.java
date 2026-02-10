@@ -11,6 +11,8 @@ public class ConfigurationSearchCriteria {
 
     private String name;
 
+    private String description;
+
     private Integer pageNumber;
 
     private Integer pageSize;
